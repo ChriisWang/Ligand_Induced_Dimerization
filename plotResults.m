@@ -1,20 +1,20 @@
-function plotResults(out, Ilist, Vexp15, Vexp60, dV15, dV60)
+function plotResults(out, Ilist, Vexp1, Vexp2, dV1, dV2, Et1, Et2)
 
     % Calculate the simulated responses for the final parameters
     Isim = logspace(-3, 4, 100);
-    Vsim15 = out(4) * function_LID(out(1), out(2), out(3), 15, Isim);
-    Vsim60 = out(5) * function_LID(out(1), out(2), out(3), 60, Isim);
+    Vsim1 = 100 * function_LID(out(1), out(2), out(3), Et1, Isim);
+    Vsim2 = 100 * function_LID(out(1), out(2), out(3), Et2, Isim);
 
     % Create a new figure
     figure;
 
     % Plot fitted curve for 15 nM and 60 nM
-    semilogx(Isim, Vsim15, 'r-', 'Color', '#9ACA7C', 'LineWidth', 1.5); hold on;
-    semilogx(Isim, Vsim60, 'b-', 'Color', '#7198F8', 'LineWidth', 1.5);
+    semilogx(Isim, Vsim1, 'r-', 'Color', '#9ACA7C', 'LineWidth', 1.5); hold on;
+    semilogx(Isim, Vsim2, 'b-', 'Color', '#7198F8', 'LineWidth', 1.5);
     
     % Plot experimental data for 15 nM and 60 nM
-    errorbar(Ilist, Vexp15, dV15, 'diamond', 'LineWidth', 1.5, 'MarkerSize', 8, 'Color', 'black', 'MarkerEdgeColor', 'black', 'MarkerFaceColor', '#9ACA7C'); 
-    errorbar(Ilist, Vexp60, dV60, 'square', 'LineWidth', 1.5, 'MarkerSize', 8, 'Color', 'black', 'MarkerEdgeColor', 'black', 'MarkerFaceColor', '#7198F8');
+    errorbar(Ilist, Vexp1, dV1, 'diamond', 'LineWidth', 1.5, 'MarkerSize', 8, 'Color', 'black', 'MarkerEdgeColor', 'black', 'MarkerFaceColor', '#9ACA7C'); 
+    errorbar(Ilist, Vexp2, dV2, 'square', 'LineWidth', 1.5, 'MarkerSize', 8, 'Color', 'black', 'MarkerEdgeColor', 'black', 'MarkerFaceColor', '#7198F8');
     
     hold off;
 

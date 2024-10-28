@@ -1,5 +1,4 @@
 function y = function_LID(Kd,fc,Ki,Et,Ilist)
-    options=optimset('MaxFunEvals',1e7,'MaxIter',1e7);
     
     for nn=1:length(Ilist)
         It = Ilist(nn);

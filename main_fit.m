@@ -5,24 +5,30 @@ function main_fit(filePath)
     % Read data from the provided CSV file
     data = readtable(filePath);
 
-    % Extract data from the table (note that the data need to be
-    % transposed)
-    Ilist = data.Ilist';
-    Vexp15 = data.Vexp15';
-    dV15 = data.dV15';
-    Vexp60 = data.Vexp60';
-    dV60 = data.dV60';
+    % Extract data from table
+    Ilist = data.Ilist;
+    Vexp1 = data.Vexp1;
+    dV1 = data.dV1;
+    Vexp2 = data.Vexp2;
+    dV2 = data.dV2;
 
+    % Define the enzyme concentrations
+    Et1 = 15; %nM
+    Et2 = 60; %nM
+    
     % Initial parameter estimates
-    params = [223.9091, 24.2419, 1.125384, 100, 100]; % [Kd, fc, Ki, V15, V60]
+    initialParams = [300, 20, 1]; % [Kdinit, Kcinit, Kiinit]
 
-    % Fit model to original data
+    % Optimization options
     options = optimset('MaxFunEvals',1e7,'MaxIter',1e7);
-    [out, paramDist] = bootStrap(Ilist, Vexp15, Vexp60, dV15, dV60, params, options);
+
+    % Perform the fitting
+    [out, paramDist] = bootStrap(Ilist, Vexp1, dV1, Et1, Vexp2, dV2, Et2, initialParams, options);
 
     % Display fitted parameters
     displayParams(out, paramDist);
 
     % Plot results
-    plotResults(out, Ilist, Vexp15, Vexp60, dV15, dV60);
+    plotResults(out, Ilist, Vexp1, Vexp2, dV1, dV2, Et1, Et2);
+
 end

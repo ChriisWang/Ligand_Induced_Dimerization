@@ -1,16 +1,16 @@
-function displayParams(out, paramDist, Ilist, Vexp15, Vexp60, dV15, dV60)
-
-    % Standard deviation of fitted parameters
+function displayParams(out, paramDist)
+    % Calculate mean and standard deviation of parameters
+    meanParams = mean(paramDist);
     stdDev = std(paramDist);
 
-    % Display fitted parameters and their standard deviations
+    % Display original fitted parameters and their standard deviations
     fprintf('Original fitted parameters:\n');
-    fprintf('Kd: %f, fc: %f, Ki: %f, V15: %f, V60: %f\n', out);
+    fprintf('Kd: %f, Kc: %f, Ki: %f\n', meanParams);
     fprintf('Standard deviations of fitted parameters:\n');
-    fprintf('Kd: %f, fc: %f, Ki: %f, V15: %f, V60: %f\n', stdDev);
+    fprintf('Kd: %f, Kc: %f, Ki: %f\n', stdDev);
 
     % Define the parameter names
-    paramNames = {'Kd', 'fc', 'Ki', 'V15', 'V60'};
+    paramNames = {'Kd', 'fc', 'Ki'};
 
     % Create a table with the fitted parameters and their standard deviations
     T = table(out', stdDev', 'RowNames', paramNames, ...
@@ -18,5 +18,4 @@ function displayParams(out, paramDist, Ilist, Vexp15, Vexp60, dV15, dV60)
 
     % Write the table to a CSV file
     writetable(T, 'fitted_parameters.csv', 'WriteRowNames', true);
-    
 end
